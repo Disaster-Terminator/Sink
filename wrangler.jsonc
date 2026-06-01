@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sink",
   "main": ".output/server/index.mjs",
+  "workers_dev": false,
   "assets": {
     "binding": "ASSETS",
     "directory": ".output/public",
