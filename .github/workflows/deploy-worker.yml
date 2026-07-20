@@ -58,7 +58,15 @@ jobs:
 
       - name: Run production smoke
         id: smoke
-        run: curl --fail --silent --show-error --retry 5 --retry-all-errors --max-time 15 https://s.raystorm.me/ > /dev/null
+        uses: DataDog/synthetics-ci-github-action@v4.0.0
+        with:
+          api-key: ${{ secrets.DD_API_KEY }}
+          app-key: ${{ secrets.DD_APP_KEY }}
+          public-ids: raa-7wr-pgf
+          selective-rerun: false
+          fail-on-critical-errors: true
+          fail-on-missing-tests: true
+          fail-on-timeout: true
 
       - name: Roll back a failed release
         id: rollback
@@ -72,4 +80,12 @@ jobs:
 
       - name: Verify rollback
         if: always() && steps.rollback.outcome == 'success'
-        run: curl --fail --silent --show-error --retry 5 --retry-all-errors --max-time 15 https://s.raystorm.me/ > /dev/null
+        uses: DataDog/synthetics-ci-github-action@v4.0.0
+        with:
+          api-key: ${{ secrets.DD_API_KEY }}
+          app-key: ${{ secrets.DD_APP_KEY }}
+          public-ids: raa-7wr-pgf
+          selective-rerun: false
+          fail-on-critical-errors: true
+          fail-on-missing-tests: true
+          fail-on-timeout: true
