@@ -22,6 +22,17 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v6
 
+      - name: Verify the production smoke gate
+        uses: DataDog/synthetics-ci-github-action@v4.0.0
+        with:
+          api-key: ${{ secrets.DD_API_KEY }}
+          app-key: ${{ secrets.DD_APP_KEY }}
+          public-ids: raa-7wr-pgf
+          selective-rerun: false
+          fail-on-critical-errors: true
+          fail-on-missing-tests: true
+          fail-on-timeout: true
+
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
 
